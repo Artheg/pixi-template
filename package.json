@@ -1,0 +1,15 @@
+{
+  "name": "pixi-template",
+  "version": "1.0.0",
+  "description": "pixi.js template with xstate and inversify",
+  "scripts": {
+    "dev": "vite"
+  },
+  "dependencies": {
+    "pixi.js": "^7.2.4"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.4",
+    "vite": "^4.3.2"
+  }
+}
