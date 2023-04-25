@@ -1,12 +1,10 @@
 import "reflect-metadata";
-import { Container as DIContainer, decorate, injectable } from "inversify";
-import { Application, Container, DisplayObject, utils } from "pixi.js";
+import { Container as DIContainer } from "inversify";
+import { Application } from "pixi.js";
 import { View } from "./views/view";
 import { GAME_TYPES } from "./di/types";
-
-decorate(injectable(), Container);
-decorate(injectable(), DisplayObject);
-decorate(injectable(), utils.EventEmitter);
+import { FiniteStateMachine } from "./fsm/fsm";
+import { Binder } from "./fsm/binder";
 
 const app = new Application<HTMLCanvasElement>({
   resizeTo: window,
@@ -14,8 +12,18 @@ const app = new Application<HTMLCanvasElement>({
 });
 document.body.appendChild(app.view);
 
-const diContainer = new DIContainer();
+const diContainer = new DIContainer({ skipBaseClassChecks: true });
 diContainer.bind(GAME_TYPES.View).to(View).inSingletonScope();
+diContainer.bind(GAME_TYPES.Binder).to(Binder).inSingletonScope();
+diContainer
+  .bind<FiniteStateMachine>(GAME_TYPES.FSM)
+  .to(FiniteStateMachine)
+  .inSingletonScope();
+
+// resolving dependencies
+diContainer.get(GAME_TYPES.View);
+diContainer.get(GAME_TYPES.Binder);
+diContainer.get(GAME_TYPES.FSM);
 
 const views = [diContainer.get<View>(GAME_TYPES.View)];
 views.forEach((view) => {
@@ -23,6 +31,8 @@ views.forEach((view) => {
   view.onResize(window.innerWidth, window.innerHeight);
 });
 
-setInterval(() => {
-  diContainer.get<View>(GAME_TYPES.View).rotateText();
-}, 1000);
+window.addEventListener("resize", () => {
+  views.forEach((view) => {
+    view.onResize(window.innerWidth, window.innerHeight);
+  });
+});

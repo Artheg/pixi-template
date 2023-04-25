@@ -11,8 +11,9 @@ export class View extends Container {
     this.addChild(this._text);
   }
 
-  rotateText(): void {
-    this._text.rotation += 0.25;
+  setTextRotation(value: number): void {
+    console.log('rotating!');
+    this._text.rotation = value;
   }
 
   onResize(width: number, height: number): void {
