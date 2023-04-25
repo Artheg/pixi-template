@@ -1,8 +1,28 @@
-import { Application } from "pixi.js";
+import "reflect-metadata";
+import { Container as DIContainer, decorate, injectable } from "inversify";
+import { Application, Container, DisplayObject, utils } from "pixi.js";
+import { View } from "./views/view";
+import { GAME_TYPES } from "./di/types";
 
-const app = new Application({
+decorate(injectable(), Container);
+decorate(injectable(), DisplayObject);
+decorate(injectable(), utils.EventEmitter);
+
+const app = new Application<HTMLCanvasElement>({
   resizeTo: window,
-  backgroundColor: 0xff0000,
+  backgroundColor: 0x4b0082,
 });
-const parent = document.body;
-document.body.replaceChild(app.view, parent.lastElementChild);
+document.body.appendChild(app.view);
+
+const diContainer = new DIContainer();
+diContainer.bind(GAME_TYPES.View).to(View).inSingletonScope();
+
+const views = [diContainer.get<View>(GAME_TYPES.View)];
+views.forEach((view) => {
+  app.stage.addChild(view);
+  view.onResize(window.innerWidth, window.innerHeight);
+});
+
+setInterval(() => {
+  diContainer.get<View>(GAME_TYPES.View).rotateText();
+}, 1000);
