@@ -1,4 +1,5 @@
 import { defineConfig } from "vite";
+import checker from 'vite-plugin-checker';
 
 export default defineConfig({
   build: {
@@ -12,4 +13,9 @@ export default defineConfig({
     host: true,
     port: 8080,
   },
+  plugins: [
+    checker({
+      typescript: true
+    })
+  ]
 });

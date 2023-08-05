@@ -4,7 +4,6 @@ import { Application } from "pixi.js";
 import { View } from "./views/view";
 import { GAME_TYPES } from "./di/types";
 import { FiniteStateMachine } from "./fsm/fsm";
-import { Binder } from "./fsm/binder";
 
 const app = new Application<HTMLCanvasElement>({
   resizeTo: window,
@@ -14,7 +13,6 @@ document.body.appendChild(app.view);
 
 const diContainer = new DIContainer({ skipBaseClassChecks: true });
 diContainer.bind(GAME_TYPES.View).to(View).inSingletonScope();
-diContainer.bind(GAME_TYPES.Binder).to(Binder).inSingletonScope();
 diContainer
   .bind<FiniteStateMachine>(GAME_TYPES.FSM)
   .to(FiniteStateMachine)
@@ -22,7 +20,6 @@ diContainer
 
 // resolving dependencies
 diContainer.get(GAME_TYPES.View);
-diContainer.get(GAME_TYPES.Binder);
 diContainer.get(GAME_TYPES.FSM);
 
 const views = [diContainer.get<View>(GAME_TYPES.View)];

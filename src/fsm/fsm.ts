@@ -4,24 +4,24 @@ import { fsmConfig } from "./fsm.config";
 import { services as getServices } from "./fsm.services";
 import { actions as getActions } from "./fsm.actions";
 import { GAME_TYPES } from "../di/types";
-import { Binder } from "./binder";
 import { inject, injectable } from "inversify";
+import { View } from "../views/view";
 
-export type Binders = {
-  binder: Binder;
+export type Params = {
+  view: View
 };
 
 @injectable()
 export class FiniteStateMachine {
-  constructor(@inject(GAME_TYPES.Binder) binder: Binder) {
+  constructor(@inject(GAME_TYPES.View) view: View) {
     console.log("creating fsm");
-    const binders: Binders = {
-      binder,
+    const params: Params = {
+      view,
     };
     const fsm = createMachine<GameData>(fsmConfig, {
-      services: getServices(binders),
-      actions: getActions(binders),
+      services: getServices(params),
+      actions: getActions(params),
     }).withContext({ rotation: 0 });
-    interpret(fsm).start();
+    interpret(fsm, { devTools: true }).start();
   }
 }

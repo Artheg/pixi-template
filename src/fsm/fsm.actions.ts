@@ -1,8 +1,8 @@
 import { assign } from "xstate";
 import { GameData } from "./types";
-import { Binders } from "./fsm";
+import { Params } from "./fsm";
 
-export const actions = (binders: Binders) => ({
+export const actions = (params: Params) => ({
   updateData: assign((context: GameData) => ({ rotation: context.rotation + 0.1 })),
-  updateView: (context: GameData) => binders.binder.setTextRotation(context.rotation),
+  updateView: (context: GameData) => params.view.setTextRotation(context.rotation),
 });

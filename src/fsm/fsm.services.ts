@@ -1,5 +1,5 @@
-import { Binders } from "./fsm";
+import { Params } from "./fsm";
 
-export const services = (binders: Binders) => ({
-  wait: () => new Promise<void>((resolve) => setTimeout(() => resolve(), 1000)),
+export const services = (_params: Params) => ({
+  wait: () => new Promise<void>((resolve) => setTimeout(() => resolve(), 100)),
 });
