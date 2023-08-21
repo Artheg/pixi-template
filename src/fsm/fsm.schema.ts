@@ -1,8 +1,9 @@
-import { MachineSchema, StateSchema } from "xstate";
+import { StateSchema } from 'xstate';
 
-export interface Schema extends StateSchema  {
+export interface Schema extends StateSchema {
   states: {
-    rotateText: {},
-    wait: {}
-  }
+    initialize: {};
+    rotateText: {};
+    wait: {};
+  };
 }
