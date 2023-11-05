@@ -1,11 +1,13 @@
+import { assign } from 'xstate';
 import { Params } from './fsm';
 import { FSMEvent, FSMEventType, GameData } from './types';
-import { assign } from 'xstate';
 
 export const actions = (params: Params) => ({
   initialize: () => {
     const { stage } = params;
-    Object.values(params.views).forEach((view) => stage.addChild(view));
+    for (const view of Object.values(params.views)) {
+      stage.addChild(view);
+    }
   },
 
   resizeViews: (_context: GameData, event: FSMEvent) => {
@@ -13,11 +15,11 @@ export const actions = (params: Params) => ({
       throw new Error(`Expected ${FSMEventType.RESIZE}, got ${event.type}`);
     }
     const { width, height } = event.data;
-    Object.values(params.views).forEach((view) => {
-      if (typeof view['onResize'] === 'function') {
+    for (const view of Object.values(params.views)) {
+      if (typeof view.onResize === 'function') {
         view.onResize(width, height);
       }
-    });
+    }
   },
 
   updateData: assign((context: GameData) => ({

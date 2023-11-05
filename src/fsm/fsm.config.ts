@@ -1,6 +1,6 @@
+import { MachineConfig } from 'xstate';
 import { Schema } from './fsm.schema';
 import { FSMEvent, GameData } from './types';
-import { MachineConfig } from 'xstate';
 
 export const fsmConfig: MachineConfig<GameData, Schema, FSMEvent> = {
   predictableActionArguments: true,

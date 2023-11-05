@@ -1,9 +1,9 @@
-import { defineConfig } from "vite";
+import { defineConfig } from 'vite';
 import checker from 'vite-plugin-checker';
 
 export default defineConfig({
   build: {
-    target: "esnext",
+    target: 'esnext',
   },
   server: {
     port: 3000,
@@ -15,7 +15,7 @@ export default defineConfig({
   },
   plugins: [
     checker({
-      typescript: true
-    })
-  ]
+      typescript: true,
+    }),
+  ],
 });

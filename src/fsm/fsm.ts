@@ -1,12 +1,12 @@
+import { inject, injectable } from 'inversify';
+import { Container } from 'pixi.js';
+import { createMachine, interpret } from 'xstate';
 import { GAME_TYPES } from '../di/types';
 import { View } from '../views/view';
 import { actions as getActions } from './fsm.actions';
 import { fsmConfig } from './fsm.config';
 import { services as getServices } from './fsm.services';
 import { FSMEventType } from './types';
-import { inject, injectable } from 'inversify';
-import { Container } from 'pixi.js';
-import { createMachine, interpret } from 'xstate';
 
 export type Params = {
   stage: Container;

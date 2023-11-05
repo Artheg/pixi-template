@@ -1,10 +1,10 @@
 import { Container as DIContainer } from 'inversify';
 import 'reflect-metadata';
 
+import { Application } from 'pixi.js';
 import { GAME_TYPES } from './di/types';
 import { FiniteStateMachine } from './fsm/fsm';
 import { View } from './views/view';
-import { Application } from 'pixi.js';
 
 const app = new Application<HTMLCanvasElement>({
   resizeTo: window,
